@@ -1,0 +1,1 @@
+//********************  FUNÇÕES REUTILIZÁVEIS : PARA INTEGRAÇÕES ENTRE PROJETOS DE DIFERENTES FRENTES ***********************************

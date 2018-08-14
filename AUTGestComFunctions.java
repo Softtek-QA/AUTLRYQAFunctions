@@ -1,0 +1,1 @@
+//********************  FUNÇÕES REUTILIZÁVEIS : APLICAÇÃO GESTÃO COMERCIAL ***********************************
