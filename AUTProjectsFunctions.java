@@ -1,1 +1,3 @@
-//********************  FUNÇÕES REUTILIZÁVEIS : PARA INTEGRAÇÕES ENTRE PROJETOS DE DIFERENTES FRENTES ***********************************
+package br.lry.functions;
+
+//********************  FUNï¿½ï¿½ES REUTILIZï¿½VEIS : PARA INTEGRAï¿½ï¿½ES ENTRE PROJETOS DE DIFERENTES FRENTES ***********************************

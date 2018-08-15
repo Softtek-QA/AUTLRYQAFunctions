@@ -1,1 +1,3 @@
-//********************  FUNÇÕES REUTILIZÁVEIS : APLICAÇÃO HYBRIS ***********************************
+package br.lry.functions;
+
+//********************  FUNï¿½ï¿½ES REUTILIZï¿½VEIS : APLICAï¿½ï¿½O HYBRIS ***********************************
