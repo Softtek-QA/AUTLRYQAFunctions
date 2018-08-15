@@ -1,3 +1,5 @@
+package br.lry.functions;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
@@ -13,9 +15,9 @@ import javax.swing.event.ChangeEvent;
 
 import org.junit.Test;
 
-public class AUTVAUtilidades {	
+public class AUTVAFunctions {	
 	/**
-	 * Opções de de configurações possíveis para o cálculo de modulos
+	 * Opï¿½ï¿½es de de configuraï¿½ï¿½es possï¿½veis para o cï¿½lculo de modulos
 	 * 
 	 * @author Softtek - QA
 	 *
@@ -23,25 +25,25 @@ public class AUTVAUtilidades {
 	public static enum AUT_OPTION_CALC_MODULOS{
 		/**
 		 * 
-		 * REPRESENTA VALORES EM QUE O RESTO GERADO PELO CALCULO DO MÓDULO É MAIOR QUE ZERO
+		 * REPRESENTA VALORES EM QUE O RESTO GERADO PELO CALCULO DO Mï¿½DULO ï¿½ MAIOR QUE ZERO
 		 * 
 		 */
 		RETORNAR_VALORES_MAIORES_QUE_ZERO,
 		/**
 		 * 
-		 * REPRESENTA VALORES EM QUE O RESTO GERADO PELO CALCULO DO MÓDULO É (0)
+		 * REPRESENTA VALORES EM QUE O RESTO GERADO PELO CALCULO DO Mï¿½DULO ï¿½ (0)
 		 * 
 		 */
 		RETORNAR_VALORES_MODULO_ZERO,
 		/**
 		 * 
-		 * REPRESENTA VALORES EM QUE O RESTO GERADO PELO CALCULO DO MÓDULO É (1)
+		 * REPRESENTA VALORES EM QUE O RESTO GERADO PELO CALCULO DO Mï¿½DULO ï¿½ (1)
 		 * 
 		 */
 		RETORNAR_VALORES_MODULO_UM,
 		/**
 		 * 
-		 * REPRESENTA VALORES EM QUE O RESTO GERADO PELO CALCULO DO MÓDULO ESTÁ ENTRE LIMITES DEFINIDOS (MINIMO E MAXIMO DO RESTO)
+		 * REPRESENTA VALORES EM QUE O RESTO GERADO PELO CALCULO DO Mï¿½DULO ESTï¿½ ENTRE LIMITES DEFINIDOS (MINIMO E MAXIMO DO RESTO)
 		 * 
 		 */
 		RETORNAR_VALORES_MODULO_DEF_PARAMETROS
@@ -51,7 +53,7 @@ public class AUTVAUtilidades {
 		
 		/**
 		 * 
-		 * Lista de objetos selecionávei
+		 * Lista de objetos selecionï¿½vei
 		 * 
 		 */
 		private Object[] itensOut = null;
@@ -78,7 +80,7 @@ public class AUTVAUtilidades {
 	}
 
 	/**
-	 * Classe responsável pelo gerenciamento de logs dos sistema
+	 * Classe responsï¿½vel pelo gerenciamento de logs dos sistema
 	 * 
 	 * @author Softtek - QA
 	 *
@@ -103,7 +105,7 @@ public class AUTVAUtilidades {
 		private String caminhoArquivoPadrao = "/va.testes.funcionais/logs/AUTLOG001.txt";
 		/**
 		 * 
-		 * Variável de configuração do modo de operação do log(visual, arquivos)
+		 * Variï¿½vel de configuraï¿½ï¿½o do modo de operaï¿½ï¿½o do log(visual, arquivos)
 		 * 
 		 */
 		private boolean exibirMensagemConsole = true;
@@ -166,7 +168,7 @@ public class AUTVAUtilidades {
 
 		/**
 		 * 
-		 * Habilita a exibição de mensagens no console de saída padrão do sistema
+		 * Habilita a exibiï¿½ï¿½o de mensagens no console de saï¿½da padrï¿½o do sistema
 		 * 
 		 */
 		public void habilitarExibicaoLogMsg() {
@@ -175,7 +177,7 @@ public class AUTVAUtilidades {
 
 		/**
 		 * 
-		 * Desabilita a exibição de mensagens no log de saída padrão do sistema
+		 * Desabilita a exibiï¿½ï¿½o de mensagens no log de saï¿½da padrï¿½o do sistema
 		 * 
 		 * 
 		 */
@@ -185,9 +187,9 @@ public class AUTVAUtilidades {
 
 		/**
 		 * 
-		 * Verifica o status de configuração do log de mensagens padrão do sistema
+		 * Verifica o status de configuraï¿½ï¿½o do log de mensagens padrï¿½o do sistema
 		 * 
-		 * @return boolean - Retorna true (exibição de mensagens no console habilitada), caso contrário false
+		 * @return boolean - Retorna true (exibiï¿½ï¿½o de mensagens no console habilitada), caso contrï¿½rio false
 		 * 
 		 */
 		public  boolean exibicaoLogHabilitada() {
@@ -197,10 +199,10 @@ public class AUTVAUtilidades {
 
 		/**
 		 * 
-		 * Registra mensagem no arquivo de log e direciona para o console de saída padrão
+		 * Registra mensagem no arquivo de log e direciona para o console de saï¿½da padrï¿½o
 		 * 		
 		 * @param tipoMensagem - Tipo da mensagem
-		 * @param mensagem - Mensagem que será registrada no log do sistema
+		 * @param mensagem - Mensagem que serï¿½ registrada no log do sistema
 		 * 
 		 */
 		public void logMensagem(AUT_TIPO_MSG_LOG tipoMensagem,Object mensagem) {
@@ -265,10 +267,10 @@ public class AUTVAUtilidades {
 
 		/**
 		 * 
-		 * Registra log de mensagem no formato padrão
+		 * Registra log de mensagem no formato padrï¿½o
 		 * 
 		 * 
-		 * Tipo padrão : AUT_TIPO_MSG_LOG.MENSAGEM_INFORMATIVA
+		 * Tipo padrï¿½o : AUT_TIPO_MSG_LOG.MENSAGEM_INFORMATIVA
 		 * 
 		 * @param mensagem - Mensagem de envio para log
 		 * 
@@ -288,7 +290,7 @@ public class AUTVAUtilidades {
 		}
 		/**
 		 * 
-		 * Configurações de inicialização da classe
+		 * Configuraï¿½ï¿½es de inicializaï¿½ï¿½o da classe
 		 * 
 		 */
 		public void configInit() {
@@ -312,12 +314,12 @@ public class AUTVAUtilidades {
 
 			System.out.println("AUT INFO : CONFIGURANDO VARIAVEIS AMBIENTE");
 
-			/******************** CONFIGURACAO DE VARIÁVEIS AMBIENTE **********************/
+			/******************** CONFIGURACAO DE VARIï¿½VEIS AMBIENTE **********************/
 
 
 		}
 		/**
-		 * Construtor padrão da classe
+		 * Construtor padrï¿½o da classe
 		 */
 		public AUTLogMensagem() {
 			configInit();
@@ -327,13 +329,13 @@ public class AUTVAUtilidades {
 
 	
 	/**
-	 * Classe responsável pelo desenvolvimento de expressões regulares para teste e formatação de dados
+	 * Classe responsï¿½vel pelo desenvolvimento de expressï¿½es regulares para teste e formataï¿½ï¿½o de dados
 	 * 
 	 * @author Softtek - QA
 	 *
 	 */
 	/**
-	 * Define os tipos de saída de mercadoria possíveis
+	 * Define os tipos de saï¿½da de mercadoria possï¿½veis
 	 * 
 	 * @author Softtek - QA
 	 *
@@ -420,7 +422,7 @@ public class AUTVAUtilidades {
 
 	/**
 	 * 
-	 * Relação de lojas e Centrais de distribuição cadastradas no sistema
+	 * Relaï¿½ï¿½o de lojas e Centrais de distribuiï¿½ï¿½o cadastradas no sistema
 	 * 
 	 * @author Softtek - QA
 	 *
@@ -620,7 +622,7 @@ public class AUTVAUtilidades {
 
 	/**
 	 * 
-	 * Tipos de depósitos cadastrados no sistema
+	 * Tipos de depï¿½sitos cadastrados no sistema
 	 * 
 	 * @author Softtek - QA
 	 *
@@ -672,30 +674,17 @@ public class AUTVAUtilidades {
 	}
 
 
-	/**
-	 * 
-	 * Extrai e imprime de forma padronizada mensagens de erro geradas pelo sistema
-	 * 
-	 * @param e - Exceção que foi lançada pelo sistema
-	 * @param docDriver - WebDriver
-	 * 
-	 */
-	public static void autLogMsg(java.lang.Exception e,org.openqa.selenium.WebDriver docDriver) {
-		System.out.println(String.format("AUT MSG LOG: %s",e.getMessage()));
-		System.out.println(String.format("AUT Titulo pagina: %s\nAUT Conteudo da Pagina:\n\n",docDriver.getTitle()));			
-		System.out.println(docDriver.getPageSource());
-		e.printStackTrace();
-	}
+	
 
 	
 
 	/**
 	 * 
-	 * Retorna um conjunto de possíveis valores
+	 * Retorna um conjunto de possï¿½veis valores
 	 * 
 	 * @param caracteres - Caractere separador de colunas
 	 * 
-	 * @return java.util.HashMap<Object,Object> - Parametros de saída
+	 * @return java.util.HashMap<Object,Object> - Parametros de saï¿½da
 	 * 
 	 */
 	public static  java.util.HashMap<Integer,String> autSplitParameters(String expressaoRegularParaDivisaoColunas,String conteudoAnalise){
@@ -720,28 +709,6 @@ public class AUTVAUtilidades {
 
 		return prmOut;
 	}
-
-	/**
-	 * 
-	 * Envia dados para o elemento com um delay no input de dados
-	 * 
-	 * @param elemento - Elemento alvo para entrada de dados
-	 * @param delayEntrada - Tempo de delay em (segundos)
-	 * @param conteudo - Conteúdo de entrada
-	 * 
-	 */
-	public static void enviarDadosElementWeb(org.openqa.selenium.WebElement elemento,long delayEntrada,String conteudo) {
-		for(Character chr : conteudo.toCharArray()) {
-			elemento.sendKeys(chr.toString());
-			try {
-				java.lang.Thread.currentThread().sleep(delayEntrada * 1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-
 	
 	/**
 	 * 
@@ -872,15 +839,15 @@ public class AUTVAUtilidades {
 	
 	public static String gerarCPF() {
 		
-		//Itens para validação do digito 1 
+		//Itens para validaï¿½ï¿½o do digito 1 
 		Integer[] digs1 = new Integer[] {10,9,8,7,6,5,4,3,2};
-		//Itens para validação do digito 2
+		//Itens para validaï¿½ï¿½o do digito 2
 		Integer[] digs2 = new Integer[] {11,10,9,8,7,6,5,4,3,2};
 		//Digitos cpf
 		Integer[] digsSelect = new Integer[] {0,1,2,3,4,5,6,7,8,9};
-		//Chaves de Função
+		//Chaves de Funï¿½ï¿½o
 		Object[] configChavesAtribuicaoBaseRND = new Object[] {"X1","X2","X3","X4","X5","X6","X7","X8","X9"};		
-		//Funções para atribuição de digitos
+		//Funï¿½ï¿½es para atribuiï¿½ï¿½o de digitos
 		AUTNumerosRandomicos rnNumber = new AUTNumerosRandomicos(digsSelect);		
 		java.util.List<Object> digsBase = new java.util.ArrayList<Object>();
 		java.util.List<Object> digsSomaProd = new java.util.ArrayList<Object>();
