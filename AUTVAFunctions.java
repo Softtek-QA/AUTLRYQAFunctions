@@ -1,4 +1,4 @@
-package br.lry.functions;
+﻿package br.lry.functions;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -889,6 +889,59 @@ public class AUTVAFunctions {
 		return strCpf.toString();
 	}
 	
+	public static String gerarCNPJ() {
+		
+		//Itens para valida��o do digito 1 
+		Integer[] digs1 = new Integer[] {5,4,3,2,9,8,7,6,5,4,3,2};
+		//Itens para valida��o do digito 2
+		Integer[] digs2 = new Integer[] {6,5,4,3,2,9,8,7,6,5,4,3,2};
+		//Digitos cpf
+		Integer[] digsSelect = new Integer[] {0,1,2,3,4,5,6,7,8,9};
+		//Chaves de Fun��o
+		Object[] configChavesAtribuicaoBaseRND = new Object[] {"X1","X2","X3","X4","X5","X6","X7","X8","X9"};		
+		//Fun��es para atribui��o de digitos
+		AUTNumerosRandomicos rnNumber = new AUTNumerosRandomicos(digsSelect);		
+		java.util.List<Object> digsBase = new java.util.ArrayList<Object>();
+		java.util.List<Object> digsSomaProd = new java.util.ArrayList<Object>();
+		Integer somaProdDigts = 0;				
+		
+		for(Object dig : digs1) {
+			Integer x = (Integer)rnNumber.selecionarProximoItem();
+			Integer digCpf  = (Integer)dig;			
+			digsBase.add(x);
+			digsSomaProd.add((x * digCpf));
+		}
+
+		Integer dig1 = (Integer)gerarFuncPorDig(11, digsBase, digsSomaProd);
+		digsBase.add(dig1);
+		digsSomaProd.add(dig1 * 2);
+		Integer contDig = 0;
+		
+		somaProdDigts = 0;
+		digsSomaProd.clear();
+		
+		for(Object dig : digs2) {
+			Integer x = (Integer)digsBase.get(contDig);		
+			Integer digCpf  = (Integer)dig;
+			
+			digsSomaProd.add(x * Integer.parseInt(dig.toString()));
+			
+			contDig++;
+		}
+				
+		digsBase.add(gerarFuncPorDig(11, digsBase, digsSomaProd));
+		java.lang.StringBuffer strCpf = new java.lang.StringBuffer();
+		
+		for(Object dig : digsBase) {
+			strCpf.append(dig);
+		}
+		
+		System.out.println(String.format("CNPJ GERADO : %s", strCpf.toString()));
+		
+		return strCpf.toString();
+	}
+	
 }
+
 
 
