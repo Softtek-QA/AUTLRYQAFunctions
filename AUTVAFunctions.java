@@ -895,7 +895,7 @@ public class AUTVAFunctions {
 		Integer[] digs1 = new Integer[] {5,4,3,2,9,8,7,6,5,4,3,2};
 		//Itens para valida��o do digito 2
 		Integer[] digs2 = new Integer[] {6,5,4,3,2,9,8,7,6,5,4,3,2};
-		//Digitos cpf
+		//Digitos CNPJ
 		Integer[] digsSelect = new Integer[] {0,1,2,3,4,5,6,7,8,9};
 		//Chaves de Fun��o
 		Object[] configChavesAtribuicaoBaseRND = new Object[] {"X1","X2","X3","X4","X5","X6","X7","X8","X9"};		
@@ -907,9 +907,9 @@ public class AUTVAFunctions {
 		
 		for(Object dig : digs1) {
 			Integer x = (Integer)rnNumber.selecionarProximoItem();
-			Integer digCpf  = (Integer)dig;			
+			Integer digCNPJ  = (Integer)dig;			
 			digsBase.add(x);
-			digsSomaProd.add((x * digCpf));
+			digsSomaProd.add((x * digCNPJ));
 		}
 
 		Integer dig1 = (Integer)gerarFuncPorDig(11, digsBase, digsSomaProd);
@@ -922,7 +922,7 @@ public class AUTVAFunctions {
 		
 		for(Object dig : digs2) {
 			Integer x = (Integer)digsBase.get(contDig);		
-			Integer digCpf  = (Integer)dig;
+			Integer digCNPJ  = (Integer)dig;
 			
 			digsSomaProd.add(x * Integer.parseInt(dig.toString()));
 			
@@ -930,15 +930,37 @@ public class AUTVAFunctions {
 		}
 				
 		digsBase.add(gerarFuncPorDig(11, digsBase, digsSomaProd));
-		java.lang.StringBuffer strCpf = new java.lang.StringBuffer();
+		java.lang.StringBuffer strCNPJ = new java.lang.StringBuffer();
 		
 		for(Object dig : digsBase) {
-			strCpf.append(dig);
+			strCNPJ.append(dig);
 		}
 		
-		System.out.println(String.format("CNPJ GERADO : %s", strCpf.toString()));
+		System.out.println(String.format("CNPJ GERADO : %s", strCNPJ.toString()));
 		
-		return strCpf.toString();
+		return strCNPJ.toString();
+	}
+	public static void gerarEstrangeiro() {
+		
+				
+		//Digitos Estrangeiro
+		Integer[] dig = new Integer[] {0,1,2,3,4,5,6,7,8,9};
+	
+	
+		java.lang.StringBuilder vari = new java.lang.StringBuilder();
+		AUTNumerosRandomicos randonNum = new AUTNumerosRandomicos(dig);		
+		
+		//Gera numeros aleatorios
+		for (int i = 0; i <9; i++) {
+		
+				Integer x = (Integer)randonNum.selecionarProximoItem();
+				vari.append(x);
+				}
+				System.out.println(String.format("Estrangeiro : %s", vari.toString()));
+		 
+			}
+	     
+	    
 	}
 	
 }
