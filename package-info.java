@@ -5,7 +5,7 @@
  * 
  * Funções reutilizaveis dos projetos
  * 
- * @author Softek - QA
+ * @author Softtek - QA
  *
  */
 package br.lry.functions;
