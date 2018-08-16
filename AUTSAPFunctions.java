@@ -1,3 +1,3 @@
 package br.lry.functions;
 
-//********************  FUN��ES REUTILIZ�VEIS : APLICA��O SAP ***********************************
+//********************  FUNÇÕES REUTILIZAVEIS : APLICACAÇÃO SAP***********************************

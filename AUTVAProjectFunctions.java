@@ -12,7 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ChangeEvent;
 import org.junit.Test;
 
-public class AUTProjectFunctions {	
+public class AUTVAProjectFunctions {	
 	/**
 	 * Op��es de de configura��es poss�veis para o c�lculo de modulos
 	 * 

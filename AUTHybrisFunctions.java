@@ -1,3 +1,3 @@
 package br.lry.functions;
 
-//********************  FUN��ES REUTILIZ�VEIS : APLICA��O HYBRIS ***********************************
+//********************  FUNÇÕES REUTILIZAVEIS : APLICACAÇÃO HYBRIS***********************************
