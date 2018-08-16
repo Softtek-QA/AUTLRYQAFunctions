@@ -3,9 +3,9 @@
  */
 /**
  * 
- * Pacote de funções do projeto
+ * Funções reutilizaveis dos projetos
  * 
- * @author Softtek-QA
+ * @author Softek - QA
  *
  */
 package br.lry.functions;
