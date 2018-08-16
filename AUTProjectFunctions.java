@@ -15,7 +15,7 @@ import javax.swing.event.ChangeEvent;
 
 import org.junit.Test;
 
-public class AUTVAFunctions {	
+public class AUTProjectFunctions {	
 	/**
 	 * Op��es de de configura��es poss�veis para o c�lculo de modulos
 	 * 
@@ -959,11 +959,10 @@ public class AUTVAFunctions {
 				System.out.println(String.format("Estrangeiro : %s", vari.toString()));
 		 
 			}
-	     
-	    
+	   	    
 	}
-	
-}
+
+
 
 
 
