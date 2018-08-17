@@ -98,8 +98,8 @@ public class AUTProjectsFunctions {
 		 * Caminho do arquivo de dados associado ao gerenciador de logs
 		 * 
 		 */
-		private String caminhoArquivoDinamico = "/va.testes.funcionais/logs/%s.txt";
-		private String caminhoArquivoPadrao = "/va.testes.funcionais/logs/AUTLOG001.txt";
+		private String caminhoArquivoDinamico = "logs/%s.txt";
+		private String caminhoArquivoPadrao = "AUTLOG001.txt";
 		/**
 		 * 
 		 * Vari�vel de configura��o do modo de opera��o do log(visual, arquivos)
