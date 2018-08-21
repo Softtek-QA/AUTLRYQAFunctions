@@ -32,7 +32,7 @@ public abstract class AUTVAProjectFunctions {
 	public static boolean autLogin(Desktop agent, String user, String password) {
 		try {
 			AUT_CURRENT_LOG_OBJECT.logMensagem("AUT INFO: INICIANDO LOGIN : APLICACAO VA");
-
+			
 			agent.<DomTextField>find("VA.Login.Usuario").setText(user);
 			agent.<DomTextField>find("VA.Login.Senha").setText(password);
 			agent.<DomButton>find("VA.Login.Avancar").click();

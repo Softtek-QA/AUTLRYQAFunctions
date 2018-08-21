@@ -1046,7 +1046,7 @@ public class AUTProjectsFunctions {
 		return strCNPJ.toString();
 	}
 
-	public static void gerarEstrangeiro() {
+	public static String gerarEstrangeiro() {
 
 		// Digitos Estrangeiro
 		Integer[] dig = new Integer[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -1062,6 +1062,7 @@ public class AUTProjectsFunctions {
 		}
 		System.out.println(String.format("Estrangeiro : %s", vari.toString()));
 
+		return vari.toString();
 	}
 
 }
