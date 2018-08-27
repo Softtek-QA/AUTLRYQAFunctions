@@ -1319,8 +1319,5 @@ public class AUT_InscricaoEstadual {
 				throw new Exception("Digito verificador inválido.");
 			}
 		}
-		
-		
 	}
 
-}

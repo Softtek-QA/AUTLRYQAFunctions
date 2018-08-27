@@ -191,7 +191,8 @@ public class AUTProjectsFunctions {
 		 * 
 		 */
 		public boolean exibicaoLogHabilitada() {
-			return exibirMensagemConsole;
+			//return exibirMensagemConsole;
+			return true;
 		}
 
 		/**

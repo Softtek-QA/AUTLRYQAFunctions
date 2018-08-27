@@ -1,6 +1,8 @@
 ﻿package br.lry.functions;
 
+import com.borland.silktest.jtf.BrowserBaseState;
 import com.borland.silktest.jtf.Desktop;
+import com.borland.silktest.jtf.common.BrowserType;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
 import br.lry.functions.*;
@@ -31,6 +33,7 @@ public abstract class AUTVAProjectFunctions {
 	 */
 	public static boolean autLogin(Desktop agent, String user, String password) {
 		try {
+			
 			AUT_CURRENT_LOG_OBJECT.logMensagem("AUT INFO: INICIANDO LOGIN : APLICACAO VA");
 			
 			agent.<DomTextField>find("VA.Login.Usuario").setText(user);
