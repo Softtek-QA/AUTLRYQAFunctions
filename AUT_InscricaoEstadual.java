@@ -1,5 +1,7 @@
 package br.lry.functions;
 
+
+
 public class AUT_InscricaoEstadual {
 
 
