@@ -1066,4 +1066,22 @@ public class AUTProjectsFunctions {
 		return vari.toString();
 	}
 
+	public static String gerarItemChaveRandomico(Integer totalCaracteres) {
+
+		// Digitos Estrangeiro
+		Integer[] dig = new Integer[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+		java.lang.StringBuilder vari = new java.lang.StringBuilder();
+		AUTNumerosRandomicos randonNum = new AUTNumerosRandomicos(dig);
+
+		// Gera numeros aleatorios
+		for (int i = 0; i < totalCaracteres; i++) {
+
+			Integer x = (Integer) randonNum.selecionarProximoItem();
+			vari.append(x);
+		}
+		System.out.println(String.format("Estrangeiro : %s", vari.toString()));
+
+		return vari.toString();
+	}
 }
