@@ -1084,4 +1084,31 @@ public class AUTProjectsFunctions {
 
 		return vari.toString();
 	}
+	
+	
+	/**
+	 * Carrega os registros do Hash de dados onde a chave e o valor correspondem as expressões regulares
+	 * 
+	 * @param regExpKey - Expressão regular para chave do hash
+	 * @param regExpValue - Expressao regular para o valor relacionado a chave corrente
+	 * @param parametros - Hash de dados para pesquisa
+	 * 
+	 * @return Hash - registros que correspondem as expressões regulares
+	 */
+	public java.util.HashMap<String,String> autFindItemOnHash(String regExpKey,String regExpValue,java.util.HashMap<String,String> parametros){
+		java.util.HashMap<String,String> paramsOut = new java.util.HashMap<String,String>();
+		java.util.regex.Pattern padraoKey = java.util.regex.Pattern.compile(regExpKey);
+		java.util.regex.Pattern padraoValue = java.util.regex.Pattern.compile(regExpValue);
+		for(String key : parametros.keySet()) {
+			java.util.regex.Matcher analise = padraoKey.matcher(key);
+			if(analise.find()) {
+				analise = padraoValue.matcher(parametros.get(key));
+				if(analise.find()) {
+					paramsOut.put(key, parametros.get(key));
+				}
+			}
+		}
+
+		return paramsOut;
+	}
 }
