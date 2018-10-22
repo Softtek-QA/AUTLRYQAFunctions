@@ -1,17 +1,8 @@
 package br.lry.functions;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.CopyOption;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.text.DateFormat;
 import java.util.Stack;
-import javax.swing.JScrollPane;
-import javax.swing.event.ChangeEvent;
-import org.junit.Test;
 
 public class AUTProjectsFunctions {
 	/**

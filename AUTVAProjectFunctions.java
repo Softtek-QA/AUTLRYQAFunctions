@@ -1,14 +1,11 @@
 ﻿package br.lry.functions;
 
-import com.borland.silktest.jtf.BrowserBaseState;
 import com.borland.silktest.jtf.Desktop;
-import com.borland.silktest.jtf.common.BrowserType;
 import com.borland.silktest.jtf.win32.AccessibleControl;
 import com.borland.silktest.jtf.xbrowser.BrowserApplication;
 import com.borland.silktest.jtf.xbrowser.DomButton;
 import com.borland.silktest.jtf.xbrowser.DomElement;
 import com.borland.silktest.jtf.xbrowser.DomTextField;
-import br.lry.functions.*;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem;
 import br.lry.functions.AUTProjectsFunctions.AUTLogMensagem.AUT_TIPO_MSG_LOG;
 
@@ -34,15 +31,17 @@ public abstract class AUTVAProjectFunctions {
 	 *         caso contrário
 	 * 
 	 */
-	public static boolean autLogin(Desktop agent, String user, String password) {
+	public static boolean autLoginBoitata(Desktop agent, String user, String password) {
+
 		try {
-			
+
 			AUT_CURRENT_LOG_OBJECT.logMensagem("AUT INFO: INICIANDO LOGIN : APLICACAO VA");
 			if(agent.<BrowserApplication>find("VA02").exists("Mensagem",10000)) {
 				agent.<AccessibleControl>find("VA02.Mensagem").click();
 			}
 			agent.<DomElement>find("VA.TelaLoginHomog1.EntrarMenuInicial").click();
 			agent.<DomTextField>find("VA.TelaLoginHomog1.Usuario").click();
+			System.out.println(user + "Usuário no textbox");
 			agent.<DomTextField>find("VA.TelaLoginHomog1.Usuario").setText(user);
 			agent.<DomTextField>find("VA.TelaLoginHomog1.Usuario").click();
 			agent.<DomTextField>find("VA.TelaLoginHomog1.Senha").setText(password);
