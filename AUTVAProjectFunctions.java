@@ -34,6 +34,54 @@ public abstract class AUTVAProjectFunctions {
 	 *         caso contrário
 	 * 
 	 */
+	public static boolean autLoginBoitata(Desktop agent, String user, String password) {
+
+		try {
+
+			AUT_CURRENT_LOG_OBJECT.logMensagem("AUT INFO: INICIANDO LOGIN : APLICACAO VA");
+			if(agent.<BrowserApplication>find("VA").exists("Mensagem",10000)) {
+				agent.<AccessibleControl>find("VA.Mensagem").click();
+			}			
+			agent.<DomElement>find("VA.TelaLoginHomog1.EntrarMenuInicial").click();
+			agent.<DomTextField>find("VA.TelaLoginHomog1.Usuario").click();
+			agent.<DomTextField>find("VA.TelaLoginHomog1.Usuario").setText(user);
+			agent.<DomTextField>find("VA.TelaLoginHomog1.Usuario").click();
+			agent.<DomTextField>find("VA.TelaLoginHomog1.Senha").setText(password);
+			agent.<DomButton>find("VA.TelaLoginHomog1.EntrarLogin").click();
+			
+			AUT_CURRENT_LOG_OBJECT.logMensagem("AUT INFO: LOGIN REALIZADO COM SUCESSO");
+			return true;
+		} catch (java.lang.Exception e) {
+			
+			AUT_CURRENT_LOG_OBJECT.logMensagem(AUT_TIPO_MSG_LOG.MENSAGEM_INFORMATIVA,
+					"AUT ERROR: LOGIN : APLICACAO VA");
+
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			
+			return false;
+		}
+	}
+	
+	
+	
+
+
+	
+	
+	
+	/**
+	 * 
+	 * Executa procedimentos de login na aplicação VA
+	 * 
+	 * @param agent    - Objeto de conexão
+	 * @param user     - Usuário VA
+	 * @param password - Senha VA
+	 * 
+	 * @return boolean - True caso o procedimento seja realizado com sucesso false
+	 *         caso contrário
+	 * 
+	 */
 	public static boolean autLogin(Desktop agent, String user, String password) {
 		try {
 			
