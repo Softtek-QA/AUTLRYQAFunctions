@@ -14,6 +14,74 @@ import javax.swing.event.ChangeEvent;
 import org.junit.Test;
 
 public class AUTProjectsFunctions {
+	public static java.util.HashMap<AUT_TYPE_STATE_INSCRIPTION,java.util.HashMap<String,Object>> AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION = null;
+	/**
+	 * 
+	 * Interface para cálculo de inscrição estadual
+	 * 
+	 * @author QA-Softtek
+	 *
+	 */
+	public interface IAUTStateInscription{
+		public int autCalcDig1();
+		public int autCalcDig2();
+		public String autPrintMessage();
+	}
+	
+	/**
+	 * 
+	 * Tipo de documento que será criado
+	 * 
+	 * @author QA - Softtek
+	 *
+	 */
+	public enum AUT_TYPE_DOCUMENT_GENERATOR{
+		CNPJ,
+		CPF,
+		RANDON_KEY,
+		INSCRIPTION
+	}
+
+	public enum AUT_COUNTRY_INSCRIPTION_DIGITS{
+		INSCRIPTION_LAST_DIGIT,
+		INSCRIPTION_DIG_1,
+		INSCRIPTION_DIG_2,
+		INSCRIPTION_DEFAULT,
+		DIGITS_CONFIGURATION_INIT
+	}
+	
+	
+	public enum AUT_TYPE_STATE_INSCRIPTION{
+		AC_ACRE,
+		AL_ALAGOAS,
+		AP_AMAPA,
+		AM_AMAZONAS,
+		BA_BAHIA,
+		CE_CEARA,
+		DF_DISTRITO_FEDERAL,
+		ES_ESPIRITO_SANTO,
+		GO_GOIAS,
+		MA_MARANHAO,
+		MT_MATO_GROSSO,
+		MS_MATO_GROSSO_DO_SUL,
+		MG_MINAS_GERAIS,
+		PA_PARA,
+		PB_PARAIBA,
+		PR_PARANA,
+		PE_PERNAMBUCO,
+		PI_PIAUI,
+		RJ_RIO_DE_JANEIRO,
+		RN_RIO_GRANDE_DO_NORTE,
+		RS_RIO_GRANDE_DO_SUL,
+		RO_RONDONIA,
+		RR_RORAIMA,
+		SC_SANTA_CATARINA,
+		SP_SAO_PAULO,
+		SE_SERGIPE,
+		TO_TOCANTINS
+	}
+
+	
 	/**
 	 * 
 	 * Relação das frentes de projeto cadastradas no sistema
@@ -360,6 +428,7 @@ public class AUTProjectsFunctions {
 			}
 		}
 
+		
 		/**
 		 * 
 		 * Configura��es de inicializa��o da classe
@@ -1020,7 +1089,267 @@ public class AUTProjectsFunctions {
 
 		return digOut;
 	}
+	
+	public static String autGetInscriptionWithDigits(AUT_TYPE_STATE_INSCRIPTION stateInscription,AUT_COUNTRY_INSCRIPTION_DIGITS digito,String inscriptionBase) {
+		
+		String inscriptionOut = inscriptionBase;
+				
+		switch(digito) {
+		case DIGITS_CONFIGURATION_INIT:{			
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION = new java.util.HashMap<AUT_TYPE_STATE_INSCRIPTION,java.util.HashMap<String,Object>>();
+			
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.put(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA, new java.util.HashMap<String,Object>());
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_DIGITS_BASE", inscriptionBase);
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_DIGITS_BASE_WITH_DIG_1", "000000000");			
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_DIGITS_BASE_WITH_DIG_2", "000000000");
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_DIGIT_1", "0");
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_DIGIT_2", "0");
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_DIGITS_CALC_1", "32765432");
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_DIGITS_CALC_2", "432765432");	
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_OK_DIG_1", false);
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_OK_DIG_2", false);
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_INIT", true);
+			
+			break;
+		}
+		case INSCRIPTION_LAST_DIGIT:{		
+			Boolean init = (Boolean)AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_INIT");
+			Boolean startValidDig1 = (Boolean)AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_OK_DIG_1");
+			Boolean startValidDig2 = (Boolean)AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_OK_DIG_2");
+			String inputBase = "";
+			String digitsBase = "";
+			String digitsBase2 = "";
+			char[] digitsCalc = null;
+			char[] digitsCalc2 = null;		
+			int index = 0;
+			
+			Integer sumDigits = 0;
+			Integer modCalc = 0;
+			Integer digInscription1 = 0,digInscription2 = 0;
+			String strCalc = "";
+			Boolean isFirstDigit = true;
+			if(init) {
+				inputBase = AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_DIGITS_BASE").toString();
+				digitsBase = AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_DIGITS_CALC_1").toString();
+				digitsBase2 = AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_DIGITS_CALC_2").toString();				
+				digitsCalc = digitsBase.toCharArray();
+				digitsCalc2 = digitsBase2.toCharArray();		
+				index = 0;
+				
+				sumDigits = 0;
+				modCalc = 0;
+				digInscription1 = 0;
+				strCalc = "%s X %s = %s soma = %s resto = %s digito = %s";
+				
+				for(Character chr : inputBase.toCharArray()) {
+					
+					if(inputBase.length()==digitsBase.length()) {
+						Character.getNumericValue(chr);
+						int dig1 = Character.getNumericValue(chr);
+						int digBs =  Character.getNumericValue(digitsCalc[index]);
+						int prodDigits = dig1 * digBs;
+						sumDigits += prodDigits;
+						modCalc = (sumDigits > 0 ? sumDigits % 11 : 0);
+						digInscription1 = 11-modCalc;			
+						System.out.println(String.format(strCalc, dig1,digBs,prodDigits,sumDigits,modCalc,digInscription1));
+						isFirstDigit = true;
+						index++;										
+					}
+					else if(inputBase.length()==digitsBase2.length()) {
+						Character.getNumericValue(chr);
+						int dig1 = Character.getNumericValue(chr);
+						int digBs =  Character.getNumericValue(digitsCalc2[index]);
+						int prodDigits = dig1 * digBs;
+						sumDigits += prodDigits;
+						modCalc = (sumDigits > 0 ? sumDigits % 11 : 0);
+						digInscription2 = 11-modCalc;			
+						System.out.println(String.format(strCalc, dig1,digBs,prodDigits,sumDigits,modCalc,digInscription2));
+						isFirstDigit = false;
+						index++;					
+					}
+					
+				}
 
+			}
+					
+			inscriptionOut += (isFirstDigit ? digInscription1.toString() : digInscription2.toString());
+			
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).remove("AUT_DIGITS_BASE");			
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_DIGITS_BASE",inscriptionOut);
+			
+			System.out.println(String.format("AUT INFO : INSCRICAO ESTADUAL : %s",inscriptionOut));
+
+			return inscriptionOut;			
+		}
+		case INSCRIPTION_DIG_1:{
+			System.out.println("AUT INFO: CALC DIGIT 1");
+			inscriptionOut = autGetInscriptionWithDigits(stateInscription,AUT_COUNTRY_INSCRIPTION_DIGITS.INSCRIPTION_LAST_DIGIT, inscriptionBase);
+			
+			return inscriptionOut;
+		}
+		case INSCRIPTION_DIG_2:{	
+			autGetInscriptionWithDigits(stateInscription,AUT_COUNTRY_INSCRIPTION_DIGITS.DIGITS_CONFIGURATION_INIT, inscriptionBase);
+			System.out.println("AUT INFO: CALC DIGIT 1");
+			inscriptionOut = autGetInscriptionWithDigits(stateInscription,AUT_COUNTRY_INSCRIPTION_DIGITS.INSCRIPTION_LAST_DIGIT, inscriptionBase);
+			System.out.println("AUT INFO: CALC DIGIT 2");
+			inscriptionOut = autGetInscriptionWithDigits(stateInscription,AUT_COUNTRY_INSCRIPTION_DIGITS.INSCRIPTION_LAST_DIGIT, inscriptionOut);
+			
+			return inscriptionOut;
+			
+		}
+		case INSCRIPTION_DEFAULT:{
+			System.out.println("AUT INFO: GENERATE DEFAULT INSCRIPTION");
+			inscriptionOut = autGetInscriptionWithDigits(stateInscription,AUT_COUNTRY_INSCRIPTION_DIGITS.INSCRIPTION_DIG_2, inscriptionBase);
+			
+			return inscriptionOut;
+		}
+		}
+
+		return inscriptionOut;
+	}
+	
+	public static String autGetNewStateIncription(AUT_TYPE_STATE_INSCRIPTION countryState) {
+		String inscription = "";
+		System.out.println("AUT INFO: GERAR INSCRICAO ESTADUAL :");
+		try {			
+			switch(countryState) {
+			case AC_ACRE:{
+				return inscription;
+			}
+			case AL_ALAGOAS:{
+				return inscription;
+			}
+			case AM_AMAZONAS:{
+				return inscription;
+			}
+			case AP_AMAPA:{
+				return inscription;
+			}
+			case BA_BAHIA:{
+				return inscription;
+			}
+			case CE_CEARA:{
+				return inscription;
+			}
+			case DF_DISTRITO_FEDERAL:{
+				return inscription;
+			}
+			case ES_ESPIRITO_SANTO:{
+				return inscription;
+			}
+			case GO_GOIAS:{
+				return inscription;
+			}
+			case MA_MARANHAO:{
+				return inscription;
+			}
+			case MG_MINAS_GERAIS:{
+				return inscription;
+			}
+			case MS_MATO_GROSSO_DO_SUL:{
+				return inscription;
+			}
+			case MT_MATO_GROSSO:{
+				return inscription;
+			}
+			case PA_PARA:{
+				return inscription;
+			}
+			case PB_PARAIBA:{
+				return inscription;
+			}
+			case PE_PERNAMBUCO:{
+				return inscription;
+			}
+			case PI_PIAUI:{
+				return inscription;
+			}
+			case PR_PARANA:{
+				inscription = gerarItemChaveRandomico(8);
+				return autGetInscriptionWithDigits(countryState,AUT_COUNTRY_INSCRIPTION_DIGITS.INSCRIPTION_DEFAULT,inscription);
+			}
+			case RJ_RIO_DE_JANEIRO:{
+				return inscription;
+			}
+			case RN_RIO_GRANDE_DO_NORTE:{
+				return inscription;
+			}
+			case RO_RONDONIA:{
+				return inscription;
+			}
+			case RR_RORAIMA:{
+				return inscription;
+			}
+			case RS_RIO_GRANDE_DO_SUL:{
+				return inscription;
+			}
+			case SC_SANTA_CATARINA:{
+				return inscription;
+			}
+			case SE_SERGIPE:{
+				return inscription;
+			}
+			case SP_SAO_PAULO:{
+				return inscription;
+			}
+			case TO_TOCANTINS:{
+				return inscription;
+			}
+			}
+			return inscription;
+		}
+		catch(java.lang.Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			
+			return inscription;
+		}
+	}
+
+	public static String autGetIncriptionPR() {
+		String inscription = autGetNewStateIncription(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA);			
+		return inscription;
+	}
+
+	
+	/**
+	 * 
+	 * 
+	 * @param tipoDocumento
+	 * @return
+	 */
+	public static String autGetNewDocument(AUT_TYPE_DOCUMENT_GENERATOR tipoDocumento,AUT_TYPE_STATE_INSCRIPTION... estado) {
+		try {
+			switch(tipoDocumento) {
+			case CNPJ:{
+				return gerarCNPJ();
+			}
+			case CPF:{
+				return gerarCPF();
+			}
+			case INSCRIPTION:{
+				return autGetNewStateIncription(estado[0]);
+			}
+			case RANDON_KEY:{
+				return gerarItemChaveRandomico(8);
+			}
+			default:{
+				String key = gerarItemChaveRandomico(10);
+				System.out.println("AUT INFO: GENERATED RANDOM KEY WITH TEN CHARACTERS");	
+				System.out.println(key);
+				return key;
+			}
+			}			
+		}
+		catch(java.lang.Exception e) {
+			System.out.println("AUT ERROR: GENERATION COUNTRY INSCRIPTION");
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			return "00000000000";
+		}
+	}
+	
+	
 	public static String gerarCPF() {
 
 		// Itens para valida��o do digito 1

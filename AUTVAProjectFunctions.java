@@ -86,8 +86,8 @@ public abstract class AUTVAProjectFunctions {
 		try {
 			
 			AUT_CURRENT_LOG_OBJECT.logMensagem("AUT INFO: INICIANDO LOGIN : APLICACAO VA");
-			if(agent.<BrowserApplication>find("VA02").exists("Mensagem",10000)) {
-				agent.<AccessibleControl>find("VA02.Mensagem").click();
+			if(agent.<BrowserApplication>find("VA").exists("Mensagem",10000)) {
+				agent.<AccessibleControl>find("VA.Mensagem").click();
 			}
 			agent.<DomElement>find("VA.TelaLoginHomog1.EntrarMenuInicial").click();
 			agent.<DomTextField>find("VA.TelaLoginHomog1.Usuario").click();
