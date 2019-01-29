@@ -15,6 +15,7 @@ import org.junit.Test;
 
 public class AUTProjectsFunctions {
 	public static java.util.HashMap<AUT_TYPE_STATE_INSCRIPTION,java.util.HashMap<String,Object>> AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION = null;
+	
 	/**
 	 * 
 	 * Interface para cálculo de inscrição estadual
@@ -23,8 +24,7 @@ public class AUTProjectsFunctions {
 	 *
 	 */
 	public interface IAUTStateInscription{
-		public int autCalcDig1();
-		public int autCalcDig2();
+		public String autCalcLastDigitInscription(String inputDigits,String calcDigits);		
 		public String autPrintMessage();
 	}
 	
@@ -1096,7 +1096,7 @@ public class AUTProjectsFunctions {
 				
 		switch(digito) {
 		case DIGITS_CONFIGURATION_INIT:{			
-			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION = new java.util.HashMap<AUT_TYPE_STATE_INSCRIPTION,java.util.HashMap<String,Object>>();
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION = new java.util.HashMap<AUT_TYPE_STATE_INSCRIPTION,java.util.HashMap<String,Object>>();			
 			
 			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.put(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA, new java.util.HashMap<String,Object>());
 			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_DIGITS_BASE", inscriptionBase);
@@ -1110,75 +1110,109 @@ public class AUTProjectsFunctions {
 			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_OK_DIG_2", false);
 			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_INIT", true);
 			
+			IAUTStateInscription inscriptionState = new IAUTStateInscription() {
+				
+				@Override
+				public String autPrintMessage() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+				
+				@Override
+				public String autCalcLastDigitInscription(String inputDigits,String calcDigits) {
+					
+					Boolean init = (Boolean)AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_INIT");
+					Boolean startValidDig1 = (Boolean)AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_OK_DIG_1");
+					Boolean startValidDig2 = (Boolean)AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_OK_DIG_2");
+					String inputBase = "";
+					String digitsBase = "";
+					String digitsBase2 = "";
+					char[] digitsCalc = null;
+					char[] digitsCalc2 = null;		
+					int index = 0;
+					String inscriptionOut = "";
+					Integer sumDigits = 0;
+					Integer modCalc = 0;
+					Integer digInscription1 = 0,digInscription2 = 0;
+					String strCalc = "";
+					Boolean isFirstDigit = true;
+					inscriptionOut = inputDigits;
+					
+					if(init) {
+						inputBase = inputDigits;
+						digitsBase = calcDigits;
+						digitsBase2 = AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_DIGITS_CALC_2").toString();				
+						digitsCalc = digitsBase.toCharArray();
+						digitsCalc2 = digitsBase2.toCharArray();		
+						index = 0;
+						
+						sumDigits = 0;
+						modCalc = 0;
+						digInscription1 = 0;
+						strCalc = "%s X %s = %s soma = %s resto = %s digito = %s";
+						
+						for(Character chr : inputDigits.toCharArray()) {
+							
+							if(inputBase.length()==digitsBase.length()) {
+								Character.getNumericValue(chr);
+								int dig1 = Character.getNumericValue(chr);
+								int digBs =  Character.getNumericValue(digitsCalc[index]);
+								
+								int prodDigits = dig1 * digBs;
+								sumDigits += prodDigits;
+								modCalc = (sumDigits > 0 ? sumDigits % 11 : 0);
+								digInscription1 = ((sumDigits % 11) > 0 ? 11-modCalc : 0);			
+								
+								System.out.println(String.format(strCalc, dig1,digBs,prodDigits,sumDigits,modCalc,digInscription1));
+								isFirstDigit = true;
+								index++;										
+							}
+							else if(inputBase.length()==digitsBase2.length()) {
+								Character.getNumericValue(chr);
+								int dig1 = Character.getNumericValue(chr);
+								int digBs =  Character.getNumericValue(digitsCalc2[index]);
+								
+								int prodDigits = dig1 * digBs;
+								sumDigits += prodDigits;
+								modCalc = (sumDigits > 0 && (sumDigits % 11) > 0? sumDigits % 11 : 0);
+								
+								digInscription2 = 11-modCalc;									
+								
+								
+								System.out.println(String.format(strCalc, dig1,digBs,prodDigits,sumDigits,modCalc,digInscription2));
+								
+								isFirstDigit = false;
+								index++;					
+							}
+							
+						}
+
+					}
+							
+					inscriptionOut += (isFirstDigit ? digInscription1.toString() : digInscription2.toString());
+					
+					AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).remove("AUT_DIGITS_BASE");			
+					AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_DIGITS_BASE",inscriptionOut);
+					
+					System.out.println(String.format("AUT INFO : INSCRICAO ESTADUAL : %s",inscriptionOut));
+					return inscriptionOut;
+				}
+			};						
+						
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_FUNCTION_OBJECT",inscriptionState);
+			
+			
+			
+			
 			break;
 		}
 		case INSCRIPTION_LAST_DIGIT:{		
-			Boolean init = (Boolean)AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_INIT");
-			Boolean startValidDig1 = (Boolean)AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_OK_DIG_1");
-			Boolean startValidDig2 = (Boolean)AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_OK_DIG_2");
-			String inputBase = "";
-			String digitsBase = "";
-			String digitsBase2 = "";
-			char[] digitsCalc = null;
-			char[] digitsCalc2 = null;		
-			int index = 0;
+			IAUTStateInscription funcObj = (IAUTStateInscription)AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_FUNCTION_OBJECT");
+			inscriptionOut = funcObj.autCalcLastDigitInscription(inscriptionBase, 
+					AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_DIGITS_CALC_1").toString());
+			inscriptionOut = funcObj.autCalcLastDigitInscription(inscriptionOut, 
+					AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_DIGITS_CALC_1").toString());
 			
-			Integer sumDigits = 0;
-			Integer modCalc = 0;
-			Integer digInscription1 = 0,digInscription2 = 0;
-			String strCalc = "";
-			Boolean isFirstDigit = true;
-			if(init) {
-				inputBase = AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_DIGITS_BASE").toString();
-				digitsBase = AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_DIGITS_CALC_1").toString();
-				digitsBase2 = AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_DIGITS_CALC_2").toString();				
-				digitsCalc = digitsBase.toCharArray();
-				digitsCalc2 = digitsBase2.toCharArray();		
-				index = 0;
-				
-				sumDigits = 0;
-				modCalc = 0;
-				digInscription1 = 0;
-				strCalc = "%s X %s = %s soma = %s resto = %s digito = %s";
-				
-				for(Character chr : inputBase.toCharArray()) {
-					
-					if(inputBase.length()==digitsBase.length()) {
-						Character.getNumericValue(chr);
-						int dig1 = Character.getNumericValue(chr);
-						int digBs =  Character.getNumericValue(digitsCalc[index]);
-						int prodDigits = dig1 * digBs;
-						sumDigits += prodDigits;
-						modCalc = (sumDigits > 0 ? sumDigits % 11 : 0);
-						digInscription1 = 11-modCalc;			
-						System.out.println(String.format(strCalc, dig1,digBs,prodDigits,sumDigits,modCalc,digInscription1));
-						isFirstDigit = true;
-						index++;										
-					}
-					else if(inputBase.length()==digitsBase2.length()) {
-						Character.getNumericValue(chr);
-						int dig1 = Character.getNumericValue(chr);
-						int digBs =  Character.getNumericValue(digitsCalc2[index]);
-						int prodDigits = dig1 * digBs;
-						sumDigits += prodDigits;
-						modCalc = (sumDigits > 0 ? sumDigits % 11 : 0);
-						digInscription2 = 11-modCalc;			
-						System.out.println(String.format(strCalc, dig1,digBs,prodDigits,sumDigits,modCalc,digInscription2));
-						isFirstDigit = false;
-						index++;					
-					}
-					
-				}
-
-			}
-					
-			inscriptionOut += (isFirstDigit ? digInscription1.toString() : digInscription2.toString());
-			
-			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).remove("AUT_DIGITS_BASE");			
-			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_DIGITS_BASE",inscriptionOut);
-			
-			System.out.println(String.format("AUT INFO : INSCRICAO ESTADUAL : %s",inscriptionOut));
-
 			return inscriptionOut;			
 		}
 		case INSCRIPTION_DIG_1:{
@@ -1192,7 +1226,7 @@ public class AUTProjectsFunctions {
 			System.out.println("AUT INFO: CALC DIGIT 1");
 			inscriptionOut = autGetInscriptionWithDigits(stateInscription,AUT_COUNTRY_INSCRIPTION_DIGITS.INSCRIPTION_LAST_DIGIT, inscriptionBase);
 			System.out.println("AUT INFO: CALC DIGIT 2");
-			inscriptionOut = autGetInscriptionWithDigits(stateInscription,AUT_COUNTRY_INSCRIPTION_DIGITS.INSCRIPTION_LAST_DIGIT, inscriptionOut);
+			System.out.println(inscriptionOut);
 			
 			return inscriptionOut;
 			
@@ -1200,6 +1234,7 @@ public class AUTProjectsFunctions {
 		case INSCRIPTION_DEFAULT:{
 			System.out.println("AUT INFO: GENERATE DEFAULT INSCRIPTION");
 			inscriptionOut = autGetInscriptionWithDigits(stateInscription,AUT_COUNTRY_INSCRIPTION_DIGITS.INSCRIPTION_DIG_2, inscriptionBase);
+			
 			
 			return inscriptionOut;
 		}
@@ -1266,7 +1301,7 @@ public class AUTProjectsFunctions {
 			}
 			case PR_PARANA:{
 				inscription = gerarItemChaveRandomico(8);
-				return autGetInscriptionWithDigits(countryState,AUT_COUNTRY_INSCRIPTION_DIGITS.INSCRIPTION_DEFAULT,inscription);
+				return autGetInscriptionWithDigits(countryState,AUT_COUNTRY_INSCRIPTION_DIGITS.INSCRIPTION_DIG_2,inscription);
 			}
 			case RJ_RIO_DE_JANEIRO:{
 				return inscription;
@@ -1307,8 +1342,25 @@ public class AUTProjectsFunctions {
 	}
 
 	public static String autGetIncriptionPR() {
+		java.util.regex.Pattern regExp = java.util.regex.Pattern.compile("\\d{8}[01]{1,2}");
+		java.util.regex.Matcher verifExp = null;
+		
 		String inscription = autGetNewStateIncription(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA);			
-		return inscription;
+		verifExp = regExp.matcher(inscription);
+		if(!verifExp.find()) {
+			return inscription;
+		}
+		else {
+			for(int c = 0;c < 100;c++) {
+				inscription = autGetNewStateIncription(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA);
+				verifExp = regExp.matcher(inscription);
+				if(!verifExp.find()) {
+					return inscription;
+				}
+			}
+			
+		}
+		return "0000000000";
 	}
 
 	
