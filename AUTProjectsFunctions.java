@@ -43,7 +43,8 @@ public class AUTProjectsFunctions {
 	}
 
 	public enum AUT_COUNTRY_INSCRIPTION_DIGITS{
-		INSCRIPTION_LAST_DIGIT,
+		RS_INSCRIPTION_LAST_DIGIT,
+		PR_INSCRIPTION_LAST_DIGIT,
 		INSCRIPTION_DIG_1,
 		INSCRIPTION_DIG_2,
 		INSCRIPTION_DEFAULT,
@@ -1098,6 +1099,12 @@ public class AUTProjectsFunctions {
 		case DIGITS_CONFIGURATION_INIT:{			
 			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION = new java.util.HashMap<AUT_TYPE_STATE_INSCRIPTION,java.util.HashMap<String,Object>>();			
 			
+			
+			/**
+			 * 
+			 * PARAMETROS DE CONFIGURAÇÃO PARA CÁLCULO DE INSCRIÇÃO ESTADUAL PARA - PR
+			 * 
+			 */
 			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.put(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA, new java.util.HashMap<String,Object>());
 			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_DIGITS_BASE", inscriptionBase);
 			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_DIGITS_BASE_WITH_DIG_1", "000000000");			
@@ -1109,6 +1116,24 @@ public class AUTProjectsFunctions {
 			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_OK_DIG_1", false);
 			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_OK_DIG_2", false);
 			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_INIT", true);
+			
+			
+			/**
+			 * 
+			 * PARAMETROS DE CONFIGURAÇÃO PARA CÁLCULO DE INSCRIÇÃO ESTADUAL PARA - RS
+			 * 
+			 */
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.put(AUT_TYPE_STATE_INSCRIPTION.RS_RIO_GRANDE_DO_SUL, new java.util.HashMap<String,Object>());
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.RS_RIO_GRANDE_DO_SUL).put("AUT_DIGITS_BASE", inscriptionBase);
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.RS_RIO_GRANDE_DO_SUL).put("AUT_DIGITS_BASE_WITH_DIG_1", "000000000");			
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.RS_RIO_GRANDE_DO_SUL).put("AUT_DIGITS_BASE_WITH_DIG_2", "000000000");
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.RS_RIO_GRANDE_DO_SUL).put("AUT_DIGIT_1", "0");
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.RS_RIO_GRANDE_DO_SUL).put("AUT_DIGIT_2", "0");
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.RS_RIO_GRANDE_DO_SUL).put("AUT_DIGITS_CALC_1", "298765432");
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.RS_RIO_GRANDE_DO_SUL).put("AUT_DIGITS_CALC_2", "432765432");	
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.RS_RIO_GRANDE_DO_SUL).put("AUT_OK_DIG_1", false);
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.RS_RIO_GRANDE_DO_SUL).put("AUT_OK_DIG_2", false);
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.RS_RIO_GRANDE_DO_SUL).put("AUT_INIT", true);
 			
 			IAUTStateInscription inscriptionState = new IAUTStateInscription() {
 				
@@ -1200,13 +1225,14 @@ public class AUTProjectsFunctions {
 			};						
 						
 			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_FUNCTION_OBJECT",inscriptionState);
+			AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.RS_RIO_GRANDE_DO_SUL).put("AUT_FUNCTION_OBJECT",inscriptionState);
 			
 			
 			
 			
 			break;
 		}
-		case INSCRIPTION_LAST_DIGIT:{		
+		case PR_INSCRIPTION_LAST_DIGIT:{		
 			IAUTStateInscription funcObj = (IAUTStateInscription)AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_FUNCTION_OBJECT");
 			inscriptionOut = funcObj.autCalcLastDigitInscription(inscriptionBase, 
 					AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).get("AUT_DIGITS_CALC_1").toString());
@@ -1215,16 +1241,24 @@ public class AUTProjectsFunctions {
 			
 			return inscriptionOut;			
 		}
+		case RS_INSCRIPTION_LAST_DIGIT:{		
+			autGetInscriptionWithDigits(AUT_TYPE_STATE_INSCRIPTION.RS_RIO_GRANDE_DO_SUL,AUT_COUNTRY_INSCRIPTION_DIGITS.DIGITS_CONFIGURATION_INIT, inscriptionBase);
+			IAUTStateInscription funcObj = (IAUTStateInscription)AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.RS_RIO_GRANDE_DO_SUL).get("AUT_FUNCTION_OBJECT");
+			inscriptionOut = funcObj.autCalcLastDigitInscription(inscriptionBase, 
+					AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.RS_RIO_GRANDE_DO_SUL).get("AUT_DIGITS_CALC_1").toString());
+			
+			return inscriptionOut;			
+		}		
 		case INSCRIPTION_DIG_1:{
 			System.out.println("AUT INFO: CALC DIGIT 1");
-			inscriptionOut = autGetInscriptionWithDigits(stateInscription,AUT_COUNTRY_INSCRIPTION_DIGITS.INSCRIPTION_LAST_DIGIT, inscriptionBase);
+			inscriptionOut = autGetInscriptionWithDigits(stateInscription,AUT_COUNTRY_INSCRIPTION_DIGITS.PR_INSCRIPTION_LAST_DIGIT, inscriptionBase);
 			
 			return inscriptionOut;
 		}
 		case INSCRIPTION_DIG_2:{	
 			autGetInscriptionWithDigits(stateInscription,AUT_COUNTRY_INSCRIPTION_DIGITS.DIGITS_CONFIGURATION_INIT, inscriptionBase);
 			System.out.println("AUT INFO: CALC DIGIT 1");
-			inscriptionOut = autGetInscriptionWithDigits(stateInscription,AUT_COUNTRY_INSCRIPTION_DIGITS.INSCRIPTION_LAST_DIGIT, inscriptionBase);
+			inscriptionOut = autGetInscriptionWithDigits(stateInscription,AUT_COUNTRY_INSCRIPTION_DIGITS.PR_INSCRIPTION_LAST_DIGIT, inscriptionBase);
 			System.out.println("AUT INFO: CALC DIGIT 2");
 			System.out.println(inscriptionOut);
 			
@@ -1316,7 +1350,8 @@ public class AUTProjectsFunctions {
 				return inscription;
 			}
 			case RS_RIO_GRANDE_DO_SUL:{
-				return inscription;
+				inscription = "224".concat(gerarItemChaveRandomico(6));
+				return autGetInscriptionWithDigits(countryState,AUT_COUNTRY_INSCRIPTION_DIGITS.RS_INSCRIPTION_LAST_DIGIT,inscription);
 			}
 			case SC_SANTA_CATARINA:{
 				return inscription;
@@ -1363,7 +1398,29 @@ public class AUTProjectsFunctions {
 		return "0000000000";
 	}
 
-	
+
+	public static String autGetIncriptionRS() {
+		java.util.regex.Pattern regExp = java.util.regex.Pattern.compile("\\d{8}[01]{1,2}");
+		java.util.regex.Matcher verifExp = null;
+		
+		String inscription = autGetNewStateIncription(AUT_TYPE_STATE_INSCRIPTION.RS_RIO_GRANDE_DO_SUL);			
+		verifExp = regExp.matcher(inscription);
+		if(!verifExp.find()) {
+			return inscription;
+		}
+		else {
+			for(int c = 0;c < 100;c++) {
+				inscription = autGetNewStateIncription(AUT_TYPE_STATE_INSCRIPTION.RS_RIO_GRANDE_DO_SUL);
+				verifExp = regExp.matcher(inscription);
+				if(!verifExp.find()) {
+					return inscription;
+				}
+			}
+			
+		}
+		return "0000000000";
+	}
+
 	/**
 	 * 
 	 * 
@@ -1539,7 +1596,6 @@ public class AUTProjectsFunctions {
 			Integer x = (Integer) randonNum.selecionarProximoItem();
 			vari.append(x);
 		}
-		System.out.println(String.format("Estrangeiro : %s", vari.toString()));
 
 		return vari.toString();
 	}
