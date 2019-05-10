@@ -1626,4 +1626,22 @@ public class AUTProjectsFunctions {
 
 		return paramsOut;
 	}
+	
+
+	/**
+	 * Aguarda o tempo (em milisegundos) para realizar a próxima instrução
+	 * 
+	 * @param milisegundos - tempo em milisegundos
+	 * 
+	 * @return boolean - true: comando executado com sucesso / false: ocorreu alguma exceção
+	 */
+	public static boolean aguardaTempo(long milisegundos) {
+        try{    
+            Thread.sleep(milisegundos);
+            return true;
+	    }catch(InterruptedException e) {
+	    	e.printStackTrace();
+	    	return false;
+	    }
+	}
 }
