@@ -438,7 +438,7 @@ public class AUTProjectsFunctions {
 		public void configInit() {
 			try {
 
-				System.out.println("AUT INFO : CRIANDO ARQUIVO DE LOGS DO SISTEMA");
+				//System.out.println("AUT INFO : CRIANDO ARQUIVO DE LOGS DO SISTEMA");
 
 				fileLogPadrao = new java.io.FileOutputStream(caminhoArquivoPadrao);
 
@@ -453,7 +453,7 @@ public class AUTProjectsFunctions {
 				e.printStackTrace();
 			}
 
-			System.out.println("AUT INFO : CONFIGURANDO VARIAVEIS AMBIENTE");
+			//System.out.println("AUT INFO : CONFIGURANDO VARIAVEIS AMBIENTE");
 
 			/******************** CONFIGURACAO DE VARI�VEIS AMBIENTE **********************/
 
@@ -1188,7 +1188,7 @@ public class AUTProjectsFunctions {
 								modCalc = (sumDigits > 0 ? sumDigits % 11 : 0);
 								digInscription1 = ((sumDigits % 11) > 0 ? 11-modCalc : 0);			
 								
-								System.out.println(String.format(strCalc, dig1,digBs,prodDigits,sumDigits,modCalc,digInscription1));
+								//System.out.println(String.format(strCalc, dig1,digBs,prodDigits,sumDigits,modCalc,digInscription1));
 								isFirstDigit = true;
 								index++;										
 							}
@@ -1204,7 +1204,7 @@ public class AUTProjectsFunctions {
 								digInscription2 = 11-modCalc;									
 								
 								
-								System.out.println(String.format(strCalc, dig1,digBs,prodDigits,sumDigits,modCalc,digInscription2));
+								//System.out.println(String.format(strCalc, dig1,digBs,prodDigits,sumDigits,modCalc,digInscription2));
 								
 								isFirstDigit = false;
 								index++;					
@@ -1219,7 +1219,7 @@ public class AUTProjectsFunctions {
 					AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).remove("AUT_DIGITS_BASE");			
 					AUT_PARAMETERS_STATE_INSCRIPTION_CONFIGURATION.get(AUT_TYPE_STATE_INSCRIPTION.PR_PARANA).put("AUT_DIGITS_BASE",inscriptionOut);
 					
-					System.out.println(String.format("AUT INFO : INSCRICAO ESTADUAL : %s",inscriptionOut));
+					//System.out.println(String.format("AUT INFO : INSCRICAO ESTADUAL : %s",inscriptionOut));
 					return inscriptionOut;
 				}
 			};						
@@ -1250,17 +1250,17 @@ public class AUTProjectsFunctions {
 			return inscriptionOut;			
 		}		
 		case INSCRIPTION_DIG_1:{
-			System.out.println("AUT INFO: CALC DIGIT 1");
+			//System.out.println("AUT INFO: CALC DIGIT 1");
 			inscriptionOut = autGetInscriptionWithDigits(stateInscription,AUT_COUNTRY_INSCRIPTION_DIGITS.PR_INSCRIPTION_LAST_DIGIT, inscriptionBase);
 			
 			return inscriptionOut;
 		}
 		case INSCRIPTION_DIG_2:{	
 			autGetInscriptionWithDigits(stateInscription,AUT_COUNTRY_INSCRIPTION_DIGITS.DIGITS_CONFIGURATION_INIT, inscriptionBase);
-			System.out.println("AUT INFO: CALC DIGIT 1");
+			//System.out.println("AUT INFO: CALC DIGIT 1");
 			inscriptionOut = autGetInscriptionWithDigits(stateInscription,AUT_COUNTRY_INSCRIPTION_DIGITS.PR_INSCRIPTION_LAST_DIGIT, inscriptionBase);
-			System.out.println("AUT INFO: CALC DIGIT 2");
-			System.out.println(inscriptionOut);
+			//System.out.println("AUT INFO: CALC DIGIT 2");
+			//System.out.println(inscriptionOut);
 			
 			return inscriptionOut;
 			
@@ -1279,7 +1279,7 @@ public class AUTProjectsFunctions {
 	
 	public static String autGetNewStateIncription(AUT_TYPE_STATE_INSCRIPTION countryState) {
 		String inscription = "";
-		System.out.println("AUT INFO: GERAR INSCRICAO ESTADUAL :");
+		//System.out.println("AUT INFO: GERAR INSCRICAO ESTADUAL :");
 		try {			
 			switch(countryState) {
 			case AC_ACRE:{
@@ -1506,7 +1506,7 @@ public class AUTProjectsFunctions {
 			strCpf.append(dig);
 		}
 
-		System.out.println(String.format("CPF GERADO : %s", strCpf.toString()));
+		//System.out.println(String.format("CPF GERADO : %s", strCpf.toString()));
 
 		return strCpf.toString();
 	}
@@ -1558,7 +1558,7 @@ public class AUTProjectsFunctions {
 			strCNPJ.append(dig);
 		}
 
-		System.out.println(String.format("CNPJ GERADO : %s", strCNPJ.toString()));
+		//System.out.println(String.format("CNPJ GERADO : %s", strCNPJ.toString()));
 
 		return strCNPJ.toString();
 	}
@@ -1577,7 +1577,7 @@ public class AUTProjectsFunctions {
 			Integer x = (Integer) randonNum.selecionarProximoItem();
 			vari.append(x);
 		}
-		System.out.println(String.format("Estrangeiro : %s", vari.toString()));
+		//System.out.println(String.format("Estrangeiro : %s", vari.toString()));
 
 		return vari.toString();
 	}
